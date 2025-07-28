@@ -7,28 +7,24 @@ To verify form functionality, field validation, error handling, and submission b
 🧪 Tech Stack
 JavaScript
 
-Selenium WebDriver
+Playwright
 
 Mocha (Test framework)
 
 Chai (Assertions)
-
-Dotenv (Optional env config)
 
 📂 Folder Structure
 hmarkets-tests/
 │
 ├── tests/               → Test specs
 │   ├── liveForm.test.js
-│  
+│   ├── demoForm.test.js  
 ├── pages/               → Page Object Models
 │   ├── basePage.js
 │   ├── liveFormPage.js
-│  │
+│   ├── demoFormPage.js
 ├── utils/               → Test data & helpers
 │   └── formData.js
-│
-├── .env                 → Environment configs (if needed)
 ├── package.json
 └── README.md
  Sample Test Scenarios
@@ -37,10 +33,6 @@ Submit Live Registration Form with valid data ✅
 Submit form with invalid email ❌
 
 Submit form with missing fields (negative test) ⚠️
-
-Verify max length handling of inputs
-
-Submit form multiple times (duplicate prevention)
 
  Notes
 Browser: Chrome (You can extend to Firefox or Selenium Grid for cross-browser testing)

@@ -7,7 +7,7 @@ To verify form functionality, field validation, error handling, and submission b
 🧪 Tech Stack
 JavaScript
 
-Selenium Webdriver
+Playwright
 
 Mocha (Test framework)
 

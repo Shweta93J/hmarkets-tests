@@ -1,25 +1,25 @@
-const { By, until } = require('selenium-webdriver');
+// basePage.js for Playwright
 
 class BasePage {
-  constructor(driver) {
-    this.driver = driver;
+  constructor(page) {
+    this.page = page;
   }
 
   async navigate(url) {
-    await this.driver.get(url);
+    await this.page.goto(url);
   }
 
-  async type(locator, input) {
-    await this.driver.findElement(locator).sendKeys(input);
+  async type(selector, input) {
+    await this.page.fill(selector, input);
   }
 
-  async click(locator) {
-    await this.driver.findElement(locator).click();
+  async click(selector) {
+    await this.page.click(selector);
   }
 
-  async isDisplayed(locator) {
+  async isDisplayed(selector) {
     try {
-      return await this.driver.findElement(locator).isDisplayed();
+      return await this.page.isVisible(selector);
     } catch {
       return false;
     }

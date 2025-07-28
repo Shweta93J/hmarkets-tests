@@ -1,23 +1,43 @@
-const { By } = require('selenium-webdriver');
-const BasePage = require('./basePage');
-
-class LiveFormPage extends BasePage {
-  constructor(driver) {
-    super(driver);
-    this.firstName = By.name('first_name');
-    this.lastName = By.name('last_name');
-    this.email = By.name('email');
-    this.phone = By.name('phone');
-    this.submitBtn = By.css('button[type="submit"]');
+// liveFormPage.js
+class LiveFormPage {
+  constructor(page) {
+    this.page = page;
+    this.firstNameInput = page.getByPlaceholder('E.g. John');
+    this.lastNameInput = page.getByPlaceholder('E.g. Doe');
+    this.emailInput = page.getByPlaceholder('E.g. john.doe@email.com');
+    this.countrySelect = page.getByRole('combobox', { name: /country/i });
+    this.phoneCodeSelect = page.getByRole('combobox', { name: /country code/i });
+    this.phoneInput = page.getByPlaceholder(/555-0123/);
+    this.passwordInput = page.getByPlaceholder('Enter your password');
+    this.optInCheckbox = page.locator('input[type="checkbox"]');
+    this.submitBtn = page.getByRole('button', { name: /start your application/i });
   }
 
-  async fillForm(data) {
-    await this.type(this.firstName, data.firstName);
-    await this.type(this.lastName, data.lastName);
-    await this.type(this.email, data.email);
-    await this.type(this.phone, data.phone);
-    await this.click(this.submitBtn);
+  async goto() {
+    await this.page.goto('https://hmarkets.com/live-account-pre-registration/');
+  }
+
+  async fillForm({
+    firstName,
+    lastName,
+    email,
+    country,
+    phone,
+    password,
+    optIn = false,
+  }) {
+    await this.firstNameInput.fill(firstName);
+    await this.lastNameInput.fill(lastName);
+    await this.emailInput.fill(email);
+    await this.countrySelect.selectOption({ label: country });
+    await this.phoneInput.fill(phone);
+    await this.passwordInput.fill(password);
+    if (optIn) await this.optInCheckbox.check();
+  }
+
+  async submit() {
+    await this.submitBtn.click();
   }
 }
 
-module.exports = LiveFormPage;
+module.exports = { LiveFormPage };

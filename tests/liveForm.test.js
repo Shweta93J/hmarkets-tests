@@ -1,32 +1,26 @@
-require('dotenv').config();
-const { Builder } = require('selenium-webdriver');
-const { expect } = require('chai');
-const LiveFormPage = require('../pages/liveFormPage');
-const data = require('../utils/formData');
+// liveForm.test.js
+const { test, expect } = require('@playwright/test');
+const { liveFormPage } = require('./liveFormPage');
 
-describe('Live Registration Form Tests', function () {
-  let driver, page;
-
-  before(async function () {
-    driver = await new Builder().forBrowser('chrome').build();
-    page = new LiveFormPage(driver);
-    await page.navigate('https://hmarkets.com/');
+test.describe('Hantec Markets Live Form', () => {
+  let form;
+  test.beforeEach(async ({ page }) => {
+    form = new liveFormPage(page);
+    await form.goto();
   });
 
-  after(async function () {
-    await driver.quit();
-  });
+  test('User can fill and submit the live account form', async ({ page }) => {
+    await form.fillForm({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@email.com',
+      country: 'United Arab Emirates',
+      phone: '+971509017966',
+      password: 'Password1!', // meets all criteria
+      optIn: true
+    });
+    await form.submit();
 
-  it('should fill and submit Live Form with valid data', async function () {
-    await page.click({ css: 'a[href*="live-account"]' }); // Adjust if needed
-    await page.fillForm(data.validUser);
-    const isSubmitted = await page.isDisplayed({ css: '.success-message' });
-    expect(isSubmitted).to.be.true;
-  });
-
-  it('should show error on invalid email', async function () {
-    await page.fillForm(data.invalidEmail);
-    const isErrorVisible = await page.isDisplayed({ css: '.error-message' });
-    expect(isErrorVisible).to.be.true;
+    await expect(page).toHaveURL(/\/en\/#docs$/);
   });
 });

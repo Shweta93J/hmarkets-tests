@@ -2,8 +2,8 @@ module.exports = {
   validUser: {
     firstName: 'Shweta',
     lastName: 'Kumari',
-    email: 'shweta.k@example.com',
-    phone: '971501234567'
+    email: 'shweta93kum@gmail.com',
+    phone: '+971509017966'
   },
   invalidEmail: {
     firstName: 'Test',

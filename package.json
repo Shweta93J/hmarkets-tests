@@ -1,0 +1,13 @@
+{
+  "name": "hmarkets-form-tests",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "mocha ./tests/**/*.test.js --timeout 10000"
+  },
+  "dependencies": {
+    "selenium-webdriver": "^4.21.0",
+    "mocha": "^10.2.0",
+    "chai": "^4.3.7",
+    "dotenv": "^16.3.1"
+  }
+}
